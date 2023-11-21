@@ -8,8 +8,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
 
-var app = express();
-//Set up mongoose connection
+var app = express(); 
+//Set up mongoose connection again
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb://root:example@mongodb:27017';
 mongoose.Promise = global.Promise;
