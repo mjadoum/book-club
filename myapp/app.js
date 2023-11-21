@@ -9,13 +9,19 @@ var usersRouter = require('./routes/users');
 var catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
 
 var app = express(); 
-//Set up mongoose connection again
+//Set up mongoose connection
 const mongoose = require('mongoose');
-const mongoDB = 'mongodb://root:example@mongodb:27017';
+const mongoDB = 'mongodb://mongodb:27017/local_library';
 mongoose.Promise = global.Promise;
-mongoose.connect(mongoDB);
+mongoose.connect(mongoDB, { 
+  auth: {     
+  username: "root",     
+  password: "example"  
+  }  
+});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 
 
 // view engine setup
