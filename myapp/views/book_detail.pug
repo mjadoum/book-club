@@ -1,4 +1,4 @@
- extends layout
+extends sidebar
 
 block content
   h1 Title: #{book.title}
@@ -37,4 +37,5 @@ block content
   p
     a(href=book.url+'/delete') Delete Book
   p
-    a(href=book.url+'/update') Update Book
+    a(href=book.url+'/update') Update Book    
+                          

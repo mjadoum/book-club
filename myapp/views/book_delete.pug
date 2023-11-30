@@ -1,19 +1,14 @@
-
-
-  
-
-
-extends layout
+extends sidebar 
 
 block content
- h1 #{title}: #{book.title}
-  p #[strong Author:]
-    a(href=book.author.url) #{book.author.name}
+  h1 #{title}: #{book.title}
+  p #[strong Title :]
+    a(href=book.url) #{book.author.name}
 
-    p Do you really want to delete this Author?
+  p Do you really want to delete this Book?
 
-    form(method='POST' action='')
-      div.form-group
-        input#bookid.form-control(type='hidden',name='bookid', required='true', value=book._id )
+  form(method='POST', action='')
+    div.form-group
+      input#bookid.form-control(type='hidden', name='bookid', required='true', value=book._id)
 
-      button.btn.btn-primary(type='submit') Delete
+    button.btn.btn-primary(type='submit') Delete

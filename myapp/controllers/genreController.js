@@ -84,8 +84,8 @@ exports.genre_create_post = [
 
 // Display Genre delete form on GET.
 exports.genre_delete_get = asyncHandler(async (req, res, next) => {
-  // Get details of genre and all associated books (in parallel)
-  const [genre, booksInGenre] = await Promise.all([
+   // Get details of genre and all associated books (in parallel)
+   const [genre, allBooksByGenre] = await Promise.all([
     Genre.findById(req.params.id).exec(),
     Book.find({ genre: req.params.id }, "title summary").exec(),
   ]);
@@ -98,22 +98,96 @@ exports.genre_delete_get = asyncHandler(async (req, res, next) => {
   res.render("genre_delete", {
     title: "Genre Delete",
     genre: genre,
-    genre_books: booksInGenre,
+    genre_books: allBooksByGenre,
   });
 
 });
 
+
 // Handle Genre delete on POST.
 exports.genre_delete_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Genre delete POST");
+  // Get details of genre and all associated books (in parallel)
+  const [genre, allBooksByGenre] = await Promise.all([
+    Genre.findById(req.params.id).exec(),
+    Book.find({ genre: req.params.id }, "title summary").exec(),
+  ]);
+  if (!genre) {
+    // No book found.
+    res.redirect("/catalog/genres");
+    return;
+  }
+  if (allBooksByGenre.length > 0) {
+    // Author has books. Render in same way as for GET route.
+    res.render("genre_delete", {
+      title: "Genre Delete",
+      genre: genre,
+      genre_books: allBooksByGenre,
+    });
+    return;
+  } else {
+    // Author has no books. Delete object and redirect to the list of authors.
+    await Genre.findByIdAndDelete(req.params.id);
+    res.redirect("/catalog/genres");
+  }
 });
+
+
+
+
+
 
 // Display Genre update form on GET.
 exports.genre_update_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Genre update GET");
+  try {
+    const genre = await Genre.findById(req.params.id).exec();
+    if (!genre) {
+      // If genre not found, redirect to genre list
+      return res.redirect('/catalog/genres');
+    }
+
+    res.render('genre_form', { title: 'Update Genre', genre });
+  } catch (err) {
+    next(err);
+  }
 });
 
 // Handle Genre update on POST.
-exports.genre_update_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Genre update POST");
-});
+exports.genre_update_post = [
+  // Validate and sanitize the name field.
+  body('name', 'Genre name must contain at least 3 characters')
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+
+  // Process request after validation and sanitization.
+  asyncHandler(async (req, res, next) => {
+    try {
+      // Extract the validation errors from a request.
+      const errors = validationResult(req);
+
+      // Create a genre object with escaped and trimmed data.
+      const genre = new Genre({
+        _id: req.params.id, // Ensure genre ID is included
+        name: req.body.name,
+      });
+
+      if (!errors.isEmpty()) {
+        // There are errors. Render form again with sanitized values/error messages.
+        res.render('genre_form', {
+          title: 'Update Genre',
+          genre,
+          errors: errors.array(),
+        });
+        return;
+      }
+
+      // Data from form is valid. Update genre.
+      await Genre.findByIdAndUpdate(req.params.id, genre);
+      // Redirect to updated genre record.
+      res.redirect(genre.url);
+    } catch (err) {
+      next(err);
+    }
+  }),
+];
+

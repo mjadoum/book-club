@@ -11,6 +11,11 @@ var book_instance_controller = require('../controllers/bookinstanceController');
 
 // GET catalog home page.
 router.get('/', book_controller.index);
+router.get('/dashboard', book_controller.dashboard);
+// GET request for dashboard.
+router.get('/dashboard', function(req, res) {
+    res.render('dashboard', { title: 'Dashboard' });
+  });
 
 // GET request for creating a Book. NOTE This must come before routes that display Book (uses id).
 router.get('/book/create', book_controller.book_create_get);

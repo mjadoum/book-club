@@ -31,7 +31,31 @@ exports.index = asyncHandler(async (req, res, next) => {
     genre_count: numGenres,
   });
 });
+exports.dashboard = asyncHandler(async (req, res, next) => {
+  // Get details of books, book instances, authors and genre counts (in parallel)
+  const [
+    numBooks,
+    numBookInstances,
+    numAvailableBookInstances,
+    numAuthors,
+    numGenres,
+  ] = await Promise.all([
+    Book.countDocuments({}).exec(),
+    BookInstance.countDocuments({}).exec(),
+    BookInstance.countDocuments({ status: "Available" }).exec(),
+    Author.countDocuments({}).exec(),
+    Genre.countDocuments({}).exec(),
+  ]);
 
+  res.render("dashboard", {
+    title: "Local Library Home",
+    book_count: numBooks,
+    book_instance_count: numBookInstances,
+    book_instance_available_count: numAvailableBookInstances,
+    author_count: numAuthors,
+    genre_count: numGenres,
+  });
+});
 // Display list of all books.
 exports.book_list = asyncHandler(async (req, res, next) => {
     const allBooks = await Book.find({}, "title author")
@@ -144,15 +168,15 @@ exports.book_create_post = [
 
 // Display book delete form on GET.
 exports.book_delete_get = asyncHandler(async (req, res, next) => {
-  try {
+  
     const [book, bookInstances] = await Promise.all([
       Book.findById(req.params.id).populate("author").populate("genre").exec(),
       BookInstance.find({ book: req.params.id }).exec(),
     ]);
 
-    if (!book) {
+    if (book === null) {
+      // No results.
       res.redirect("/catalog/books"); // Redirect if book not found
-      return;
     }
 
     res.render("book_delete", {
@@ -160,37 +184,34 @@ exports.book_delete_get = asyncHandler(async (req, res, next) => {
       book: book,
       book_instances: bookInstances,
     });
-  } catch (err) {
-    next(err);
-  }
+ 
 });
 
 
-// Handle book delete on POST.
 exports.book_delete_post = asyncHandler(async (req, res, next) => {
-  try {
+ 
     const [book, bookInstances] = await Promise.all([
       Book.findById(req.params.id).populate("author").populate("genre").exec(),
       BookInstance.find({ book: req.params.id }).exec(),
     ]);
 
-    if (bookInstances.length > 0) {
-      // Book has instances. Render in the same way as for the GET route.
-      res.render("book_delete", {
-        title: "Delete Book",
-        book: book,
-        book_instances: bookInstances,
-      });
+    if (!book) {
+      // No book found.
+      res.redirect("/catalog/books");
       return;
-    } else {
+    }
+
+    
       // Book has no instances. Delete the object and redirect to the book list.
       await Book.findByIdAndDelete(req.params.id);
+    
       res.redirect("/catalog/books");
-    }
-  } catch (err) {
-    next(err);
-  }
+  
+ 
 });
+
+
+
 
 
 

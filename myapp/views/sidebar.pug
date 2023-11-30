@@ -1,3 +1,4 @@
+doctype html
 html(lang='en')
   head
     title= title
@@ -26,15 +27,20 @@ html(lang='en')
               a(class='nav-link', href='/catalog/bookinstances') Book Instances
             li(class='nav-item')
               a(class='nav-link dash btn btn-success', href='/catalog/dashboard') Dashboard
-             
-    //-           ul
-    //-             li 
-    //-                a(class='dropdown-item', href='/catalog/author/create') Create new author
-    //-             li 
-    //-                a(class='dropdown-item', href='/catalog/genre/create') Create new genre
-    //-             li 
-    //-               a(class='dropdown-item', href='/catalog/book/create') Create new book
-    //-            li 
-    //-                a(class='dropdown-item', href='/catalog/bookinstance/create') Create new book instance copy
-    br
-    block content
+
+    div(class='container-fluid')
+      div(class='row')
+        div(class='col-sm-3 left-side mt-5')
+          block sidebar
+            ul(class='sidebar-nav')
+              li
+                a( class='nav-link btn btn-outline-primary' href='/catalog/author/create') Create new author
+              li 
+                a( class='nav-link btn btn-outline-primary' href='/catalog/genre/create') Create new genre
+              li 
+                a( class='nav-link btn btn-outline-primary' href='/catalog/book/create') Create new book
+              li 
+                a( class='nav-link btn btn-outline-primary' href='/catalog/bookinstance/create') Create new book instance 
+                
+        div(class='col-sm-9')
+          block content

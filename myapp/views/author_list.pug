@@ -1,14 +1,21 @@
 extends layout
 
 block content
-  h1= title
+  h1(class="display-5 text-center mt-2 mb-5")= title
   
-  ul
-    each author in author_list
-      li 
-        a(href=author.url) #{author.name} 
-        |  (#{author.lifespan})
+  if author_list.length > 0
+    .container
+      .row
+        each author in author_list
+          .col-4
+            div(class="card mb-3" style="width: 18rem; height: 19rem;")
+              a(href=author.url class="card-img-top m-2 p-3")
+                img(src='/writer.png', alt='writer Cover', class='card-img-top')
+              div(class="card-body text-center")
+                h5(class="card-title") Author name:
+                a(href=author.url class="card-link") #{author.name}
+  else
+    li There are no authors.
 
-    else
-      li There are no authors.
+
 

@@ -1,0 +1,20 @@
+extends sidebar
+
+block content
+  h1(class="display-5 text-center mt-5 mb-5")  Dashboard
+
+
+
+  p(class='lead text-center mb-3') The library has the following record counts:
+
+
+
+  div(class="card dash-card mx-auto" style="width: 24rem;")
+    ul(class="list-group list-group-flush")
+      li(class="list-group-item") #[strong Books:] !{book_count}
+      li(class="list-group-item") #[strong Books Copies:] !{book_instance_count}
+      li(class="list-group-item") #[strong Books Copies available:] !{book_instance_available_count} 
+      li(class="list-group-item") #[strong Authors:] !{author_count}
+      li(class="list-group-item") #[strong Genres:] !{genre_count}
+  
+  
