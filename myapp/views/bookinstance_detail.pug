@@ -1,24 +1,30 @@
-extends layout 
+extends layout
 
 block content
-  h1 ID: #{bookinstance._id}
+  h1.display-6.text-center.mt-4.mb-4 Title: #{bookinstance.book.title}
 
-  p #[strong Title:]
-    a(href=bookinstance.book.url) #{bookinstance.book.title}
-  p #[strong Imprint:] #{bookinstance.imprint}
+  div(class="card" style="width: 50rem; margin:auto;")
+    ul.list-group.list-group-flush
+      li.list-group-item #[strong Title:]
+        a(href=bookinstance.book.url) #{bookinstance.book.title}
+      li.list-group-item #[strong Imprint:] #{bookinstance.imprint}
 
-  p #[strong Status:]
-    if bookinstance.status=='Available'
-      span.text-success #{bookinstance.status}
-    else if bookinstance.status=='Maintenance'
-      span.text-danger #{bookinstance.status}
-    else
-      span.text-warning #{bookinstance.status}
+      li.list-group-item #[strong Status:]
+        if bookinstance.status=='Available'
+          span.text-success #{bookinstance.status}
+        else if bookinstance.status=='Maintenance'
+          span.text-danger #{bookinstance.status}
+        else
+          span.text-warning #{bookinstance.status}
 
-  if bookinstance.status!='Available'
-    p #[strong Due back:] #{bookinstance.due_back_formatted}
-  hr
-  p
-    a(href=bookinstance.url+'/delete') Delete Book Instance
-  p
-    a(href=bookinstance.url+'/update') Update Book Instance
+      if bookinstance.status!='Available'
+        li.list-group-item #[strong Due back:] #{bookinstance.due_back_formatted}
+
+  br
+  br
+  .text-center
+   p
+    a.btn.btn-outline-danger(href=bookinstance.url+'/delete') Delete Book Instance
+   p
+    a.btn.btn-outline-primary(href=bookinstance.url+'/update') Update Book Instance
+

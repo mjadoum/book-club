@@ -1,18 +1,24 @@
 extends sidebar 
 
 block content
-  h1 ID: #{bookinstance._id}
-  p #[strong Title:]
-    a(href=bookinstance.book.url) #{bookinstance.book.title}
-  p #[strong Imprint:] #{bookinstance.imprint}
+  h1.display-6.text-center.mt-4.mb-4= bookinstance.book.title
 
-  p Do you really want to delete this Book?
+  div(class="card mb-5" style="width: 50rem; margin:auto;")
+    ul.list-group.list-group-flush
+      li.list-group-item #[strong Title:]
+        a(href=bookinstance.book.url)= bookinstance.book.title
+      li.list-group-item #[strong Imprint:] #{bookinstance.imprint}
+
+  p Do you really want to delete this Book Instance?
 
   form(method='POST', action='')
     div.form-group
       input#bookinstanceid.form-control(type='hidden', name='bookinstanceid', required='true', value=bookinstance._id)
 
     button.btn.btn-primary(type='submit') Delete
+  br
+  p
+     a.btn.btn-outline-primary(href=bookinstance.url+'/') Go back
 
 
 

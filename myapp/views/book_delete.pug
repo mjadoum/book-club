@@ -1,9 +1,9 @@
 extends sidebar 
 
 block content
-  h1 #{title}: #{book.title}
-  p #[strong Title :]
-    a(href=book.url) #{book.author.name}
+  h6.display-6.text-center.mb-5.mt-5= `${title}: ${book.title}`
+
+
 
   p Do you really want to delete this Book?
 
@@ -11,4 +11,7 @@ block content
     div.form-group
       input#bookid.form-control(type='hidden', name='bookid', required='true', value=book._id)
 
-    button.btn.btn-primary(type='submit') Delete
+    button.btn.btn-danger(type='submit') Delete
+  br
+  p
+    a.btn.btn-outline-primary(href=book.url+'/') Go back

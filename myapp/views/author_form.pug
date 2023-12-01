@@ -5,19 +5,19 @@ block content
   .card.p-4.cardform 
     form(method='POST' action='')
       .form-group
-        label(for='first_name') First Name:
+        label.mb-1(for='first_name') First Name:
         input#first_name.form-control(type='text' placeholder='First name' name='first_name' required='true' value=(undefined===author ? '' : author.first_name) )
       br
       .form-group
-        label(for='family_name') Family Name:
+        label.mb-1(for='family_name') Family Name:
         input#family_name.form-control(type='text' placeholder='Family name' name='family_name' required='true' value=(undefined===author ? '' : author.family_name))
       br
       .form-group
-        label(for='date_of_birth') Date of birth:
+        label.mb-1(for='date_of_birth') Date of birth:
         input#date_of_birth.form-control(type='date' name='date_of_birth' value=(undefined===author ? '' : author.date_of_birth) )
       br
       .form-group
-        label(for='date_of_death') Date of death:
+        label.mb-1(for='date_of_death') Date of death:
         input#date_of_death.form-control(type='date' name='date_of_death' value=(undefined===author ? '' : author.date_of_death) )
       br
       button.btn.btn-primary(type='submit') Submit
@@ -26,3 +26,4 @@ block content
       ul.alert.alert-danger
         for error in errors
           li= error.msg
+  

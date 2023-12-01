@@ -1,41 +1,53 @@
-extends sidebar
+extends layout
 
 block content
-  h1 Title: #{book.title}
+  h1.display-6.text-center.mt-4.mb-4 #{book.title}
 
-  p #[strong Author:]
-    a(href=book.author.url) #{book.author.name}
-  p #[strong Summary:] #{book.summary}
-  p #[strong ISBN:] #{book.isbn}
-  p #[strong Genre:]
-    each val, index in book.genre
-      a(href=val.url) #{val.name}
-      if index < book.genre.length - 1
-        |,
-
+  div(class="card" style="width: 50rem; margin:auto;")
+    ul.list-group.list-group-flush
+      li.list-group-item #[strong Author: ]
+        a(href=book.author.url) #{book.author.name}
+      li.list-group-item #[strong Summary: ] #{book.summary}
+      li.list-group-item #[strong ISBN: ] #{book.isbn}
+      li.list-group-item #[strong Genre: ]
+        each val, index in book.genre
+          a(href=val.url) #{val.name}
+          if index < book.genre.length - 1 
+             | , 
+    
   div(style='margin-left:20px;margin-top:20px')
-    h4 Copies
+    h2.text-center.mt-5.mb-4 Copies
 
-    each val in book_instances
-      hr
-      if val.status=='Available'
-        p.text-success #{val.status}
-      else if val.status=='Maintenance'
-        p.text-danger #{val.status}
-      else
-        p.text-warning #{val.status}
-      p #[strong Imprint:] #{val.imprint}
-      if val.status!='Available'
-        p #[strong Due back:] #{val.due_back}
-      p #[strong Id:]
-        a(href=val.url) #{val._id}
-
+    if book_instances.length > 0
+      table.table.table-bordered.table-hover
+        thead
+          tr
+            th Status
+            th Imprint
+            th Due back
+            th ID
+        tbody
+          each val in book_instances
+            tr
+              td
+                if val.status=='Available'
+                  p.text-success #{val.status}
+                else if val.status=='Maintenance'
+                  p.text-danger #{val.status}
+                else
+                  p.text-warning #{val.status}
+              td #[strong Imprint:] #{val.imprint}
+              td
+                if val.status!='Available'
+                  p #[strong Due back:] #{val.due_back}
+              td #[strong Id:]
+                a(href=val.url) #{val._id}
     else
       p There are no copies of this book in the library.
 
-  hr
-  p
-    a(href=book.url+'/delete') Delete Book
-  p
-    a(href=book.url+'/update') Update Book    
-                          
+  hr.text-center
+  .text-center
+    p
+      a.btn.btn-outline-danger(href=book.url+'/delete') Delete book
+    p
+      a.btn.btn-outline-primary(href=book.url+'/update') Update book 
