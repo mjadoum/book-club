@@ -7,13 +7,12 @@ block content
     .container
       .row
         each author in author_list
-          .col-4
-            div(class="card mb-3" style="width: 18rem; height: 19rem;")
-              a(href=author.url class="card-img-top m-2 p-3")
-                img(src='/writer.png', alt='writer Cover', class='card-img-top')
+          .col-3
+            div(class="card mb-3" style="width: 13rem; height: 16rem;")
+              img(src='/writer.png', alt='writer Cover', class='card-img-top mx-auto')
               div(class="card-body text-center")
-                h5(class="card-title") Author name:
-                a(href=author.url class="card-link") #{author.name}
+                h5(class="card-title") 
+                 a(href=author.url class="card-link") #{author.name}
   else
     li There are no authors.
 

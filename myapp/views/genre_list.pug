@@ -1,12 +1,19 @@
 extends layout 
 
 block content
-  h1= title
+  h1(class="display-5 text-center mt-2 mb-5")= title
 
-  ul
-    each genre in genre_list
-      li
-        a(href=genre.url) #{genre.name} 
-
-    else
+  if genre_list.length > 0
+    .container
+      .row
+        each genre in genre_list
+          .col-3
+            div(class="card mb-3" style="width: 13rem; height: 16rem;")
+              img(src='/genres.png', alt='writer Cover', class='card-img-top mx-auto')
+              div(class="card-body text-center")
+                h5(class="card-title")
+                 a(href=genre.url class="card-link") #{genre.name}
+  else
       li There are no genres.
+
+
