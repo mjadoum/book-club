@@ -12,8 +12,9 @@ block content
               a(href=book.url class="card-img-top m-2 ")
                img(src='/book.png', alt='Book Cover', class='card-img-top')
               div(class="card-body text-center")
-                h5(class="card-title") #{book.title}
-                a(href=book.author.url class="card-link") Author (#{book.author.name})
+                h5(class="card-title mb-4") #{book.title} 
+                h6(class="card-title") Author
+                 a(href=book.author.url class="card-link")  (#{book.author.name})
   else
     li There are no books.
 

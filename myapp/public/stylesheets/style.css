@@ -75,3 +75,11 @@ body{
   background-color: #fff; /* Adjust as needed */
 
 }
+table{
+  width: 80% !important;
+  margin: auto;
+}
+.cardform{
+  width: 50%;
+  margin: auto;
+}
