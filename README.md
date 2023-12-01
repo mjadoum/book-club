@@ -50,5 +50,5 @@
 
 7. **Accessing the Application**:
    - Open your browser and navigate to:
-     [http://127.0.0.1:3000/catalog](http://127.0.0.1:3000/catalog)
+     [[http://127.0.0.1:3000/catalog](http://localhost:3001/catalog)](http://127.0.0.1:3000/catalog)
 
