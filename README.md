@@ -50,6 +50,5 @@
 
 7. **Accessing the Application**:
    - Open your browser and navigate to:
-     [http://127.0.0.1:3000/catalog](http://127.0.0.1:3000/catalog).
-   - Ensure to include these instructions in the `README.md` file on GitHub for others to easily understand and follow.
+     [http://127.0.0.1:3000/catalog](http://127.0.0.1:3000/catalog)
 
