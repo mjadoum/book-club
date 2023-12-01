@@ -1,28 +1,28 @@
-extends sidebar
+extends layout
 
 block content
-
-
-    h6.display-6.text-center.mb-5.mt-5= `${title}: ${author.name}`
-
-    if author_books.length > 0
-      .container
-        p.lead.text-center Note: Delete the following books before attempting to delete this author.
-        h4.display-6.text-center.mt-5 Books
-        .row
-          each book in author_books
-            .col-4
-              div(class="card mb-3" style="width: 19rem; height: 21rem;")
-                a(href=book.url class="card-img-top m-1 ")
-                  img(src='/book.png', alt='Book Cover', class='card-img-top')
-                div(class="card-body text-center")
-                  h4(class="card-title mb-4") #{book.title} 
-    else
-      p Do you really want to delete this Author?
-      form(method='POST' action='')
-        .form-group
-          input#authorid.form-control(type='hidden', name='authorid', required='true', value=author._id )
-        button.btn.btn-danger(type='submit') Delete
+  h6.display-6.text-center.mb-5.mt-5= `${title}: ${author.name}`
+  .container
+    .row
+      if author_books.length > 0
+        .container
+          p.lead.text-center Note: Delete the following books before attempting to delete this author.
+          h4.display-6.text-center.mt-5 Books
+          .row
+            each book in author_books
+              .col-4
+                div(class="card mb-3" style="width: 19rem; height: 21rem;")
+                  a(href=book.url class="card-img-top m-1 ")
+                    img(src='/book.png', alt='Book Cover', class='card-img-top')
+                  div(class="card-body text-center")
+                    h4(class="card-title mb-4") #{book.title} 
+      else
+        p Do you really want to delete this Author?
+        form(method='POST' action='')
+          .form-group
+            input#authorid.form-control(type='hidden', name='authorid', required='true', value=author._id )
+          button.btn.btn-danger(type='submit') Delete
     br
     p
-      a.btn.btn-outline-primary(href=author.url+'/') Go back    
+      a.btn.btn-outline-primary(href=author.url+'/') Go back
+

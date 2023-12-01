@@ -1,17 +1,17 @@
-extends sidebar 
+extends layout 
 
 block content
   h6.display-6.text-center.mb-5.mt-5= `${title}: ${book.title}`
 
+  .container
+    .row
+      p Do you really want to delete this Book?
 
+      form(method='POST', action='')
+        .form-group
+          input#bookid.form-control(type='hidden', name='bookid', required='true', value=book._id)
 
-  p Do you really want to delete this Book?
-
-  form(method='POST', action='')
-    div.form-group
-      input#bookid.form-control(type='hidden', name='bookid', required='true', value=book._id)
-
-    button.btn.btn-danger(type='submit') Delete
-  br
-  p
-    a.btn.btn-outline-primary(href=book.url+'/') Go back
+        button.btn.btn-danger(type='submit') Delete
+      br
+      p
+        a.btn.btn-outline-primary(href=book.url+'/') Go back

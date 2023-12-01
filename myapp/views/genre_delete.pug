@@ -1,4 +1,4 @@
-extends sidebar 
+extends layout 
 block content
   
   h6.display-6.text-center.mb-5.mt-5= `${title}: ${genre.name}`
@@ -15,6 +15,9 @@ block content
                 img(src='/book.png', alt='Book Cover', class='card-img-top')
               div(class="card-body text-center")
                 h4(class="card-title mb-4") #{book.title}
+      br
+      p
+      a.btn.btn-outline-primary(href=genre.url+'/') Go back
   else
     p Do you really want to delete this Genre?
     form(method='POST' action='')
